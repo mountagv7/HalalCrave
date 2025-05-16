@@ -83,4 +83,4 @@ Built by [Mountaga Sy](https://github.com/mountagv7)
 ## 📄 License
 
 This project is for educational and personal portfolio use.  
-
+Reproduction or redistribution of the code or concept without permission is prohibited.
