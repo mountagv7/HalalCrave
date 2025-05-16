@@ -83,4 +83,4 @@ Built by [Mountaga Sy](https://github.com/mountagv7)
 ## 📄 License
 
 This project is for educational and personal portfolio use.  
-License: _To be added (MIT/Apache/etc.)_
+
