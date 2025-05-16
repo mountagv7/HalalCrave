@@ -1,0 +1,28 @@
+# Global ignores
+
+# macOS
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node backend
+server/node_modules/
+server/.env
+
+# React Native frontend
+client/node_modules/
+client/.expo/
+client/dist/
+client/web-build/
+client/android/
+client/ios/
+client/*.log
+client/*.pem
+client/*.tsbuildinfo
+
+# IDEs
+.idea/
+.vscode/
