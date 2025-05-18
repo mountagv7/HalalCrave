@@ -11,7 +11,7 @@ yarn-error.log*
 # Node backend
 server/node_modules/
 server/.env
-
+node_modules
 # React Native frontend
 client/node_modules/
 client/.expo/
