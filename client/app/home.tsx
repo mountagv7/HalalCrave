@@ -15,7 +15,8 @@ import { useRouter } from 'expo-router';
 import halalLogo from '../assets/images/halal-logo.png';
 
 type Restaurant = {
-  title: string;
+  title?: string;
+  name?: string;
   address: string;
   rating?: number;
   thumbnail?: string;
@@ -33,6 +34,7 @@ export default function HomeScreen() {
         const text = await response.text();
         const data = JSON.parse(text);
         setRestaurants(data);
+        console.log(`🍽️ Loaded ${data.length} restaurants`);
       } catch (error) {
         console.error('❌ FINAL CATCH:', error);
       } finally {
@@ -68,7 +70,7 @@ export default function HomeScreen() {
 
         <FlatList
           data={restaurants}
-          keyExtractor={(item, index) => `${item.title}-${index}`}
+          keyExtractor={(item, index) => `${item.name || item.title}-${index}`}
           style={{ flex: 1 }}
           contentContainerStyle={{ paddingBottom: 12 }}
           renderItem={({ item }) => (
@@ -77,7 +79,7 @@ export default function HomeScreen() {
                 <Image source={{ uri: item.thumbnail }} style={styles.image} />
               )}
               <View style={styles.info}>
-                <Text style={styles.name}>{item.title}</Text>
+                <Text style={styles.name}>{item.name || item.title}</Text>
                 <Text style={styles.address}>{item.address}</Text>
                 {item.rating && (
                   <Text style={styles.rating}>⭐ {item.rating}/5</Text>

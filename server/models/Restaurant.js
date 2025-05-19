@@ -1,24 +1,18 @@
-const mongoose = require('mongoose');
-
 const restaurantSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  address: {
-    type: String,
-    required: true
-  },
+  title: String,             // SerpAPI result name
+  address: String,
+  rating: Number,
+  thumbnail: String,
   coordinates: {
-    type: [Number], // [longitude, latitude]
-    index: '2dsphere' // for geolocation queries
+    type: [Number],          // Optional
+    index: '2dsphere'
   },
   isCertified: {
     type: Boolean,
     default: false
   },
   tags: {
-    type: [String] // e.g. ["zabiha", "fast food", "family-friendly"]
+    type: [String]
   },
   addedBy: {
     type: String,
@@ -29,7 +23,3 @@ const restaurantSchema = new mongoose.Schema({
     default: Date.now
   }
 });
-
-const Restaurant = mongoose.model('Restaurant', restaurantSchema);
-
-module.exports = Restaurant;

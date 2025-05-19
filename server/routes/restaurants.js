@@ -1,34 +1,18 @@
 const express = require('express');
-const axios = require('axios');
 const router = express.Router();
-require('dotenv').config();
+const Restaurant = require('../models/Restaurant'); // make sure you have a Restaurant model
 
 router.get('/', async (req, res) => {
-  const location = req.query.location || 'Montreal, Quebec, Canada';
-  console.log('📡 Request received for location:', location);
+  const location = req.query.location || 'Montreal';
+  console.log('📡 Fetching restaurants from MongoDB for location:', location);
 
   try {
-    const response = await axios.get('https://serpapi.com/search.json', {
-      params: {
-        engine: 'google_local',
-        q: 'halal restaurants',
-        location,
-        api_key: process.env.SERPAPI_KEY
-      }
-    });
-
-    const results = response.data.local_results;
-
-    if (!results || results.length === 0) {
-      console.warn('⚠️ No results returned from SerpAPI.');
-      return res.status(200).json([]); // ✅ Fix: Return empty array, not 204
-    }
-
-    console.log(`✅ Returning ${results.length} results`);
-    res.json(results);
+    const restaurants = await Restaurant.find({ address: { $regex: location, $options: 'i' } });
+    console.log(`✅ Found ${restaurants.length} restaurants in DB`);
+    res.json(restaurants);
   } catch (err) {
-    console.error('❌ Error from SerpAPI:', err.message);
-    res.status(500).json({ error: 'Failed to fetch data from SerpAPI' });
+    console.error('❌ Error fetching from DB:', err.message);
+    res.status(500).json({ error: 'Failed to fetch from DB' });
   }
 });
 
