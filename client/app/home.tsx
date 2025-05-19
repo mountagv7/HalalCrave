@@ -29,7 +29,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await fetch('http://192.168.2.116:3001/restaurants?location=Montreal');
+        const response = await fetch('https://halalcrave.onrender.com/restaurants?location=Montreal');
         const text = await response.text();
         const data = JSON.parse(text);
         setRestaurants(data);
