@@ -1,10 +1,12 @@
+const mongoose = require('mongoose'); // ✅ Don't forget this
+
 const restaurantSchema = new mongoose.Schema({
-  title: String,             // SerpAPI result name
+  title: String,
   address: String,
   rating: Number,
   thumbnail: String,
   coordinates: {
-    type: [Number],          // Optional
+    type: [Number],
     index: '2dsphere'
   },
   isCertified: {
@@ -23,3 +25,6 @@ const restaurantSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
+const Restaurant = mongoose.model('Restaurant', restaurantSchema);
+module.exports = Restaurant;

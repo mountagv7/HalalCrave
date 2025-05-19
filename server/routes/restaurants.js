@@ -1,30 +1,19 @@
-const mongoose = require('mongoose'); // ✅ This line was missing
+const express = require('express');
+const router = express.Router();
+const Restaurant = require('../models/Restaurant'); // make sure you have a Restaurant model
 
-const restaurantSchema = new mongoose.Schema({
-  name: String,
-  address: String,
-  rating: Number,
-  thumbnail: String,
-  coordinates: {
-    type: [Number],
-    index: '2dsphere'
-  },
-  isCertified: {
-    type: Boolean,
-    default: false
-  },
-  tags: {
-    type: [String]
-  },
-  addedBy: {
-    type: String,
-    default: 'admin'
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
+router.get('/', async (req, res) => {
+  const location = req.query.location || 'Montreal';
+  console.log('📡 Fetching restaurants from MongoDB for location:', location);
+
+  try {
+    const restaurants = await Restaurant.find({ address: { $regex: location, $options: 'i' } });
+    console.log(`✅ Found ${restaurants.length} restaurants in DB`);
+    res.json(restaurants);
+  } catch (err) {
+    console.error('❌ Error fetching from DB:', err.message);
+    res.status(500).json({ error: 'Failed to fetch from DB' });
   }
 });
 
-const Restaurant = mongoose.model('Restaurant', restaurantSchema);
-module.exports = Restaurant;
+module.exports = router;
